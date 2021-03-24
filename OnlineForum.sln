@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL.Domain", "DAL.Domain\DAL.Domain.csproj", "{251280D0-4892-43CC-ACB7-97DA9E194E6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.Domain", "DAL.Domain\DAL.Domain.csproj", "{251280D0-4892-43CC-ACB7-97DA9E194E6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL.Interfaces", "DAL.Interfaces\DAL.Interfaces.csproj", "{1678A22A-6B93-4572-8FE6-1F07F4756CC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.Interfaces", "DAL.Interfaces\DAL.Interfaces.csproj", "{1678A22A-6B93-4572-8FE6-1F07F4756CC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL.Infrastructure", "DAL.Infrastructure\DAL.Infrastructure.csproj", "{B664789E-4886-41D8-96D1-FC8E4010A5A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.Infrastructure", "DAL.Infrastructure\DAL.Infrastructure.csproj", "{B664789E-4886-41D8-96D1-FC8E4010A5A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Interfaces", "BLL.Interfaces\BLL.Interfaces.csproj", "{D7123E21-45A0-4396-AE0E-3C44628A4864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Interfaces", "BLL.Interfaces\BLL.Interfaces.csproj", "{D7123E21-45A0-4396-AE0E-3C44628A4864}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Infrastructure", "BLL.Infrastructure\BLL.Infrastructure.csproj", "{5C86B3B5-D836-49B4-BE59-DBC48608DA39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Infrastructure", "BLL.Infrastructure\BLL.Infrastructure.csproj", "{5C86B3B5-D836-49B4-BE59-DBC48608DA39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.DTO", "BLL.DTO\BLL.DTO.csproj", "{850A46FF-A5D0-4A90-B5DD-FBE191E816FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.DTO", "BLL.DTO\BLL.DTO.csproj", "{850A46FF-A5D0-4A90-B5DD-FBE191E816FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{A45B24E1-24F6-42F4-AC2D-B89262DD26CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{850A46FF-A5D0-4A90-B5DD-FBE191E816FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{850A46FF-A5D0-4A90-B5DD-FBE191E816FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{850A46FF-A5D0-4A90-B5DD-FBE191E816FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45B24E1-24F6-42F4-AC2D-B89262DD26CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45B24E1-24F6-42F4-AC2D-B89262DD26CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45B24E1-24F6-42F4-AC2D-B89262DD26CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45B24E1-24F6-42F4-AC2D-B89262DD26CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
