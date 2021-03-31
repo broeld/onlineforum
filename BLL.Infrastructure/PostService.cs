@@ -1,42 +1,106 @@
-﻿using BLL.DTO;
+﻿using AutoMapper;
 using BLL.Interfaces;
+using BLL.Models;
+using DAL.Domain;
+using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Infrastructure
 {
-    public class PostService : BaseService, IPostService
+    public class PostService : IPostService
     {
-        public Task CreateAsync(PostDto postDto)
+        private IUnitOfWork unit;
+        private IMapper mapper;
+
+        public PostService(IUnitOfWork unitOfWork, IMapper automapper)
         {
-            throw new NotImplementedException();
+            unit = unitOfWork;
+            mapper = automapper;
         }
 
-        public Task<IEnumerable<PostDto>> GetAllAsync()
+        public async Task CreateAsync(PostModel post)
         {
-            throw new NotImplementedException();
+            if (post == null)
+            {
+                throw new Exception("Post is null");
+            }
+
+            var postEntity = mapper.Map<PostModel, Post>(post);
+            var author = await unit.UserProfiles.GetByIdAsync(post.UserProfileId);
+            author.Rating++;
+
+            await unit.Posts.CreateAsync(postEntity);
+            await unit.SaveChangesAsync();
+
+            unit.UserProfiles.Update(author);
+            await unit.SaveChangesAsync();
         }
 
-        public Task<PostDto> GetByIdAsync(int id)
+        public async Task<IEnumerable<PostModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var posts = await unit.Posts.GetAllAsync();
+
+            return mapper.Map<IEnumerable<Post>, IEnumerable<PostModel>>(posts);
         }
 
-        public Task<IEnumerable<PostDto>> GetPostsByThreadId(int threadId)
+        public async Task<PostModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var post = await unit.Posts.GetByIdAsync(id);
+
+            if (post != null)
+            {
+                return mapper.Map<Post, PostModel>(post);
+            }
+
+            throw new Exception("Query result is null");
         }
 
-        public Task RemoveAsync(PostDto postDto)
+        public async Task<IEnumerable<PostModel>> GetPostsByThreadId(int threadId)
         {
-            throw new NotImplementedException();
+            var posts = await unit.Posts.GetAllAsync();
+            var postsByThread = posts.Where(p => p.ThreadId == threadId);
+
+            return mapper.Map<IEnumerable<Post>, IEnumerable<PostModel>>(postsByThread);
         }
 
-        public Task UpdateAsync(PostDto postDto)
+        public async Task RemoveAsync(PostModel post)
         {
-            throw new NotImplementedException();
+            var users = await unit.UserProfiles.GetWithIncludeAsync();
+            var user = users.FirstOrDefault(u => u.Id == post.UserProfileId);
+
+            user.Rating--;
+
+            var postEntity = await unit.Posts.GetByIdAsync(post.Id);
+            var replies = postEntity.Replies;
+
+            foreach(var reply in replies)
+            {
+                reply.RepliedPostId = null;
+                unit.Posts.Update(reply);
+            }
+
+            await unit.SaveChangesAsync();
+
+            unit.Posts.Remove(postEntity);
+            unit.UserProfiles.Update(user);
+            await unit.SaveChangesAsync();
+      
+        }
+
+        public async Task UpdateAsync(PostModel post)
+        {
+            if (post == null)
+            {
+                throw new Exception("Post is null");
+            }
+
+            var postEntity = mapper.Map<PostModel, Post>(post);
+
+            unit.Posts.Update(postEntity);
+            await unit.SaveChangesAsync();
         }
     }
 }

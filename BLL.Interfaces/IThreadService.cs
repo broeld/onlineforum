@@ -1,24 +1,22 @@
-﻿using BLL.DTO;
-using System;
+﻿using BLL.Models;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
     public interface IThreadService
     {
-        Task<IEnumerable<ThreadDto>> GetAllAsync();
+        Task<IEnumerable<ThreadModel>> GetAllAsync();
 
-        Task<ThreadDto> GetByIdAsync(int id);
+        Task<ThreadModel> GetByIdAsync(int id);
 
-        Task CreateAsync(ThreadDto threadDto);
+        Task CreateAsync(ThreadModel thread);
 
-        Task UpdateAsync(ThreadDto threadDto);
+        Task UpdateAsync(ThreadModel thread);
 
-        Task RemoveAsync(ThreadDto threadDto);
+        Task RemoveAsync(ThreadModel thread);
 
-        Task<IEnumerable<ThreadDto>> GetThreadsByTopicId(int topicId);
+        Task<IEnumerable<ThreadModel>> GetThreadsByTopicId(int topicId);
 
         Task<bool> Deactivate(int threadId);
     }

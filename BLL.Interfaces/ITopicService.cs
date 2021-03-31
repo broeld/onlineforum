@@ -1,23 +1,21 @@
-﻿using BLL.DTO;
-using System;
+﻿using BLL.Models;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
     public interface ITopicService
     {
-        Task<IEnumerable<TopicDto>> GetAllAsync();
+        Task<IEnumerable<TopicModel>> GetAllAsync();
 
-        Task<TopicDto> GetByIdAsync(int id);
+        Task<TopicModel> GetByIdAsync(int id);
 
-        Task CreateAsync(TopicDto topicDto);
+        Task CreateAsync(TopicModel topicDto);
 
-        Task UpdateAsync(TopicDto topicDto);
+        Task UpdateAsync(TopicModel topicDto);
 
-        Task RemoveAsync(TopicDto topicsDto);
+        Task RemoveAsync(TopicModel topicsDto);
 
-        Task CreateTopicWithImage(TopicDto topicDto, string fileName, string rootPath, byte[] image);
+        Task CreateTopicWithImage(TopicModel topicDto, string fileName, string rootPath, byte[] image);
     }
 }

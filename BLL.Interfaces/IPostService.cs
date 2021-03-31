@@ -1,23 +1,21 @@
-﻿using BLL.DTO;
-using System;
+﻿using BLL.Models;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
     public interface IPostService
     {
-        Task<IEnumerable<PostDto>> GetAllAsync();
+        Task<IEnumerable<PostModel>> GetAllAsync();
 
-        Task<PostDto> GetByIdAsync(int id);
+        Task<PostModel> GetByIdAsync(int id);
 
-        Task CreateAsync(PostDto postDto);
+        Task CreateAsync(PostModel post);
 
-        Task UpdateAsync(PostDto postDto);
+        Task UpdateAsync(PostModel post);
 
-        Task RemoveAsync(PostDto postDto);
+        Task RemoveAsync(PostModel post);
 
-        Task<IEnumerable<PostDto>> GetPostsByThreadId(int threadId);
+        Task<IEnumerable<PostModel>> GetPostsByThreadId(int threadId);
     }
 }

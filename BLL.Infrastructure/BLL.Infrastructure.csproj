@@ -6,6 +6,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BLL.Interfaces\BLL.Interfaces.csproj" />
+    <ProjectReference Include="..\BLL.Models\BLL.Models.csproj" />
+    <ProjectReference Include="..\DAL.Domain\DAL.Domain.csproj" />
+    <ProjectReference Include="..\DAL.Interfaces\DAL.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
 
 </Project>

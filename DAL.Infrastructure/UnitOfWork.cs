@@ -1,6 +1,6 @@
 ﻿using DAL.Domain;
-using DAL.Infrastructure.Context;
-using DAL.Interfaces.Repositories;
+using DAL.Infrastructure;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -10,9 +10,9 @@ namespace DAL.Infrastructure
     {
         private readonly ForumDbContext _context;
 
-        public UnitOfWork(ForumDbContext context, IGenericRepository<Post> postRepository,
-            IGenericRepository<Thread> threadRepository, IGenericRepository<Notification> notificationRepository,
-            IGenericRepository<UserProfile> userRepository, IGenericRepository<Topic> topicRepository)
+        public UnitOfWork(ForumDbContext context, IRepository<Post> postRepository,
+            IRepository<Thread> threadRepository, IRepository<Notification> notificationRepository,
+            IRepository<UserProfile> userRepository, IRepository<Topic> topicRepository)
         {
             _context = context;
             Posts = postRepository;
@@ -27,11 +27,11 @@ namespace DAL.Infrastructure
             await _context.SaveChangesAsync();
         }
 
-        public IGenericRepository<Post> Posts { get; }
-        public IGenericRepository<Thread> Threads { get; }
-        public IGenericRepository<Topic> Topics { get; }
-        public IGenericRepository<UserProfile> UserProfiles { get; }
-        public IGenericRepository<Notification> Notifications { get; }
+        public IRepository<Post> Posts { get; }
+        public IRepository<Thread> Threads { get; }
+        public IRepository<Topic> Topics { get; }
+        public IRepository<UserProfile> UserProfiles { get; }
+        public IRepository<Notification> Notifications { get; }
     }
 }
     

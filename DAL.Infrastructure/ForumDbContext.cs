@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.Infrastructure.Context
+namespace DAL.Infrastructure
 {
     public class ForumDbContext: IdentityDbContext<ApplicationUser>
     {

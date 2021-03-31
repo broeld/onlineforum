@@ -1,7 +1,4 @@
-﻿using BLL.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BLL.Models;
 using System.Threading.Tasks;
 
 namespace BLL.Interfaces
@@ -11,7 +8,7 @@ namespace BLL.Interfaces
         Task SignInAsync();
         Task SignOutAsync();
         Task SignUpAsync();
-        Task<UserDto> GetUserDetail(int userId);
+        Task<UserModel> GetUserDetail(int userId);
         Task<bool> Deactivate(int userId);
         Task UpdateImage(int userId, string profileImageName, string path, byte[] image);
     }

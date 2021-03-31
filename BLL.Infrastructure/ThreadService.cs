@@ -1,47 +1,91 @@
-﻿using BLL.DTO;
+﻿using AutoMapper;
 using BLL.Interfaces;
+using BLL.Models;
+using DAL.Domain;
+using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Infrastructure
 {
-    public class ThreadService : BaseService, IThreadService
+    public class ThreadService : IThreadService
     {
-        public Task CreateAsync(ThreadDto threadDto)
+        private IUnitOfWork unit;
+        private IMapper mapper;
+
+        public ThreadService(IUnitOfWork unitOfWork, IMapper automapper)
         {
-            throw new NotImplementedException();
+            unit = unitOfWork;
+            mapper = automapper;
         }
 
-        public Task<bool> Deactivate(int threadId)
+        public async Task CreateAsync(ThreadModel thread)
         {
-            throw new NotImplementedException();
+            if (thread == null) throw new Exception("Thread is null");
+
+            var threadEntity = mapper.Map<ThreadModel, Thread>(thread);
+
+            await unit.Threads.CreateAsync(threadEntity);
+            await unit.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<ThreadDto>> GetAllAsync()
+        public async Task<bool> Deactivate(int threadId)
         {
-            throw new NotImplementedException();
+            var thread = await unit.Threads.GetByIdAsync(threadId);
+
+            thread.IsOpen = false;
+            thread.ThreadClosedDate = DateTime.Now;
+
+            unit.Threads.Update(thread);
+            await unit.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<ThreadDto> GetByIdAsync(int id)
+        public async Task<IEnumerable<ThreadModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var threads = await unit.Threads.GetAllAsync();
+
+            return mapper.Map<IEnumerable<Thread>, IEnumerable<ThreadModel>>(threads);
         }
 
-        public Task<IEnumerable<ThreadDto>> GetThreadsByTopicId(int topicId)
+        public async Task<ThreadModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var thread = await unit.Threads.GetByIdAsync(id);
+            if (thread != null)
+            {
+                var threadModel = mapper.Map<Thread, ThreadModel>(thread);
+                return threadModel;
+            }
+
+            throw new Exception("Thread is null");
         }
 
-        public Task RemoveAsync(ThreadDto threadDto)
+        public async Task<IEnumerable<ThreadModel>> GetThreadsByTopicId(int topicId)
         {
-            throw new NotImplementedException();
+            var threads = await unit.Threads.GetAllAsync();
+            var threadsByTopic = threads.Where(t => t.TopicId == topicId);
+
+            return mapper.Map<IEnumerable<Thread>, IEnumerable<ThreadModel>>(threadsByTopic);
+
         }
 
-        public Task UpdateAsync(ThreadDto threadDto)
+        public async Task RemoveAsync(ThreadModel thread)
         {
-            throw new NotImplementedException();
+            var threadEntity = mapper.Map<ThreadModel, Thread>(thread);
+
+            unit.Threads.Remove(threadEntity);
+            await unit.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(ThreadModel thread)
+        {
+            var threadEntity = mapper.Map<ThreadModel, Thread>(thread);
+
+            unit.Threads.Update(threadEntity);
+            await unit.SaveChangesAsync();
         }
     }
 }

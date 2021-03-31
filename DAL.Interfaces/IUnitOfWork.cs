@@ -1,5 +1,4 @@
 ﻿using DAL.Domain;
-using DAL.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +8,11 @@ namespace DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IGenericRepository<Post> Posts { get; }
-        IGenericRepository<Thread> Threads { get; }
-        IGenericRepository<Topic> Topics { get; }
-        IGenericRepository<UserProfile> UserProfiles { get; }
-        IGenericRepository<Notification> Notifications { get; }
+        IRepository<Post> Posts { get; }
+        IRepository<Thread> Threads { get; }
+        IRepository<Topic> Topics { get; }
+        IRepository<UserProfile> UserProfiles { get; }
+        IRepository<Notification> Notifications { get; }
 
         Task SaveChangesAsync();
     }
