@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using DAL.Infrastructure;
+using DAL.Infrastructure.Services;
+using BLL.Infrastructure.Services;
 
 namespace Web
 {
@@ -24,6 +27,10 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.RegisterDataServices(""); //Add connection string;
+
+            services.RegisterBusinessServices();
+
             services.AddControllers();
         }
 

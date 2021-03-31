@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Infrastructure
 {
-    public class UnitOfWork
+    public class UnitOfWork: IUnitOfWork
     {
         private readonly ForumDbContext _context;
 
