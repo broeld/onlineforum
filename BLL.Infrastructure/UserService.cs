@@ -4,9 +4,12 @@ using BLL.Models;
 using DAL.Domain;
 using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,24 +45,88 @@ namespace BLL.Infrastructure
 
         }
 
-        public Task<UserModel> GetUserDetail(int userId)
+        public async Task<UserModel> GetUserDetail(int userId)
         {
-            throw new NotImplementedException();
+            var userProfile = await unit.UserProfiles.GetByIdAsync(userId);
+
+            if (userProfile == null)
+            {
+                throw new Exception("Result is null");
+            }
+
+            return mapper.Map<UserProfile, UserModel>(userProfile);
         }
 
-        public Task SignInAsync()
+        public async Task<SignedInUserModel> SignInAsync(LoginModel loginModel, string tokenKey, int tokenExpTime, string tokenAud, string tokenIssuer)
         {
-            throw new NotImplementedException();
+            if (loginModel == null)
+            {
+                throw new ArgumentNullException("Arguments is null"); 
+            }
+
+            var result = await signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, false, false);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception("Login failed");
+            }
+
+            var user = await userManager.FindByNameAsync(loginModel.Username);
+            string token = await GenerateJWTToken(user, tokenKey, tokenExpTime, tokenAud, tokenIssuer);
+            var profiles = await unit.UserProfiles.GetAllAsync();
+            var userProfile = profiles.FirstOrDefault(au => au.ApplicationUserId == user.Id);
+
+            if (userProfile == null)
+            {
+                throw new Exception("Result is null");
+            }
+
+            var userModel = mapper.Map<UserProfile, UserModel>(userProfile);
+
+            return new SignedInUserModel(userModel, token);
         }
 
-        public Task SignOutAsync()
+        public async Task SignOutAsync()
         {
-            throw new NotImplementedException();
+            await signInManager.SignOutAsync();
         }
 
-        public Task SignUpAsync()
+        public async Task<SignedInUserModel> SignUpAsync(RegistrationModel registrationModel, string tokenKey, int tokenExpTime, string tokenAud, string tokenIssuer)
         {
-            throw new NotImplementedException();
+            if (registrationModel == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var appUser = mapper.Map<RegistrationModel, ApplicationUser>(registrationModel);
+
+            var result = await userManager.CreateAsync(appUser, registrationModel.Password);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception("User creation failed");
+            }
+
+            var userProfile = new UserProfile
+            {
+                ApplicationUserId = appUser.Id,
+                IsActive = true,
+                RegistrationDate = DateTime.Now,
+                ProfileImagePath = registrationModel.ImageProfilePath ?? defaultProfileImagePath
+            };
+
+            await unit.UserProfiles.CreateAsync(userProfile);
+            await unit.SaveChangesAsync();
+
+            userProfile.ApplicationUser = appUser;
+
+            await signInManager.SignInAsync(appUser, false);
+
+            string token = await GenerateJWTToken(appUser, tokenKey, tokenExpTime, tokenAud, tokenIssuer);
+            var userModel = mapper.Map<UserProfile, UserModel>(userProfile);
+
+            return new SignedInUserModel(userModel, token);
+
         }
 
         public Task UpdateImage(int userId, string profileImageName, string path, byte[] image)
