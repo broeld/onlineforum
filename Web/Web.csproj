@@ -4,5 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BLL.Infrastructure\BLL.Infrastructure.csproj" />
+    <ProjectReference Include="..\BLL.Interfaces\BLL.Interfaces.csproj" />
+    <ProjectReference Include="..\DAL.Infrastructure\DAL.Infrastructure.csproj" />
+  </ItemGroup>
+
 
 </Project>
