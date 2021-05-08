@@ -12,6 +12,7 @@ namespace DAL.Infrastructure
         public ForumDbContext(DbContextOptions<ForumDbContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<Post> Posts { get; set; }

@@ -11,6 +11,7 @@ namespace DAL.Infrastructure.Services
         public static IServiceCollection RegisterDataServices(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ForumDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddIdentityCore<ApplicationUser>().AddEntityFrameworkStores<ForumDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IRepository<Notification>, NotificationRepository>();

@@ -42,7 +42,6 @@ namespace BLL.Infrastructure
             await unit.SaveChangesAsync();
 
             return true;
-
         }
 
         public async Task<UserModel> GetUserDetail(int userId)
