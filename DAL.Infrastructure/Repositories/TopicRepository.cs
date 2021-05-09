@@ -9,7 +9,7 @@ namespace DAL.Infrastructure.Repositories
 {
     public class TopicRepository : Repository<Topic>
     {
-        public TopicRepository(DbContext context) : base(context)
+        public TopicRepository(ForumDbContext context) : base(context)
         {
         }
 

@@ -6,7 +6,7 @@ namespace DAL.Infrastructure.Repositories
 {
     public class NotificationRepository : Repository<Notification>
     {
-        public NotificationRepository(DbContext context): base(context)
+        public NotificationRepository(ForumDbContext context): base(context)
         {
 
         }

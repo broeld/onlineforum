@@ -9,7 +9,7 @@ namespace DAL.Infrastructure.Repositories
 {
     public class ThreadRepository : Repository<Thread>
     {
-        public ThreadRepository(DbContext context) : base(context)
+        public ThreadRepository(ForumDbContext context) : base(context)
         {
         }
 

@@ -14,7 +14,7 @@ namespace DAL.Infrastructure
     {
         protected DbSet<T> dbset { get; }
 
-        public Repository(DbContext context)
+        public Repository(ForumDbContext context)
         {
             dbset = context.Set<T>();
         }

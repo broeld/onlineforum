@@ -7,7 +7,7 @@ namespace DAL.Infrastructure.Repositories
 {
     public class PostRepository : Repository<Post>
     {
-        public PostRepository(DbContext context) : base(context)
+        public PostRepository(ForumDbContext context) : base(context)
         {
         }
 
