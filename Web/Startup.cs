@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using DAL.Infrastructure;
 using DAL.Infrastructure.Services;
 using BLL.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Web
 {
@@ -34,6 +37,28 @@ namespace Web
 
             services.AddControllers();
 
+            services.AddAuthentication(auth =>
+            {
+              auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+              auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(jwtBearerOptions => 
+                {
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters ()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["Token:Audience"],
+                        ValidateLifetime = bool.Parse(Configuration["Tokens:ValidateLifeTime"]),
+                        ClockSkew = TimeSpan.FromMinutes(int.Parse(Configuration["Tokens:ExpiryMinutes"]))
+                    };
+                });
+
+            services.AddMvc();
+
             services.AddSwaggerGen();
         }
 
@@ -51,6 +76,8 @@ namespace Web
              });
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

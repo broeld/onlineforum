@@ -9,7 +9,7 @@ namespace DAL.Infrastructure.Repositories
 {
     public class UserRepository : Repository<UserProfile>
     {
-        public UserRepository(DbContext context) : base(context)
+        public UserRepository(ForumDbContext context) : base(context)
         {
         }
 

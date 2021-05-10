@@ -9,10 +9,10 @@ namespace DAL.Infrastructure
 {
     public class ForumDbContext: IdentityDbContext<ApplicationUser>
     {
-        public ForumDbContext(DbContextOptions<ForumDbContext> options)
+        public ForumDbContext(DbContextOptions options)
             : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
         public DbSet<Post> Posts { get; set; }

@@ -33,8 +33,8 @@ namespace Web.Controllers
             }
 
             var signedInUser = await userService.SignInAsync(loginModel, configuration["Tokens:Key"],
-                    int.Parse(configuration["Token:ExpiryMinutes"]),
-                    configuration["Tokens:Audience"], configuration["Token:Issuer"]);
+                    int.Parse(configuration["Tokens:ExpiryMinutes"]),
+                    configuration["Tokens:Audience"], configuration["Tokens:Issuer"]);
 
             return Ok(signedInUser);
         }
@@ -48,8 +48,8 @@ namespace Web.Controllers
             }
 
             var signedInUser = await userService.SignUpAsync(registrationModel, configuration["Tokens:Key"],
-                    int.Parse(configuration["Token:ExpiryMinutes"]),
-                    configuration["Tokens:Audience"], configuration["Token:Issuer"]);
+                    int.Parse(configuration["Tokens:ExpiryMinutes"]),
+                    configuration["Tokens:Audience"], configuration["Tokens:Issuer"]);
 
             return Ok(signedInUser);
         }

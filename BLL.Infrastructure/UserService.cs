@@ -94,7 +94,7 @@ namespace BLL.Infrastructure
         {
             if (registrationModel == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("Exception here");
             }
 
             var appUser = mapper.Map<RegistrationModel, ApplicationUser>(registrationModel);
