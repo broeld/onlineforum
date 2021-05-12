@@ -28,6 +28,7 @@ namespace Web
         }
 
         public IConfiguration Configuration { get; }
+        readonly string AllowSpecificOrigins = "AllowSpecificOrigins";
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -36,6 +37,17 @@ namespace Web
             services.RegisterDataServices("Host=localhost; Port=5432; Database=Forum; User ID=postgres; Password=dinadina; Pooling=true;"); //Add connection string;
 
             services.RegisterBusinessServices();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200") //отут
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
 
             services.AddAuthentication(auth =>
             {
@@ -77,6 +89,8 @@ namespace Web
                 app.UseDeveloperExceptionPage();
             }
 
+            // app.UseHttpsRedirection();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c => {
@@ -84,6 +98,8 @@ namespace Web
              });
 
             app.UseRouting();
+
+            app.UseCors(AllowSpecificOrigins);
 
             app.UseAuthentication();
 
