@@ -54,8 +54,7 @@ namespace DAL.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    ImagePath = table.Column<string>(type: "text", nullable: true)
+                    Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,7 +173,6 @@ namespace DAL.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProfileImagePath = table.Column<string>(type: "text", nullable: true),
                     Rating = table.Column<int>(type: "integer", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -283,6 +281,54 @@ namespace DAL.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "8a85efda-db00-4823-b6b6-40893078d69f", "f81dcd38-fce2-44ca-9b0d-7cc02667b9d2", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "003b0471-a211-4992-9a7d-5c6dee90e55f", 0, "73b96e95-53ac-46ae-b089-a3f574b94a06", "dinaiovcheva@gmail.com", true, false, null, "DINAIOVCHEVA@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEIiOToBtn/W1T7lqAYtuNNqiQYO6py3KFD9AZOXSln8EttkK4DlOR+Z+5tH5/wW7UA==", null, false, "4c729f12-6ae3-4350-9124-24b42fbeb501", false, "admin" });
+
+            migrationBuilder.InsertData(
+                table: "Topics",
+                columns: new[] { "Id", "Description", "Title" },
+                values: new object[] { 101, "Python is the best programming language ever", "Python" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "8a85efda-db00-4823-b6b6-40893078d69f", "003b0471-a211-4992-9a7d-5c6dee90e55f" });
+
+            migrationBuilder.InsertData(
+                table: "UserProfiles",
+                columns: new[] { "Id", "ApplicationUserId", "IsActive", "Rating", "RegistrationDate" },
+                values: new object[] { 1, "003b0471-a211-4992-9a7d-5c6dee90e55f", true, 1000, new DateTime(2021, 5, 12, 19, 32, 1, 211, DateTimeKind.Local).AddTicks(6155) });
+
+            migrationBuilder.InsertData(
+                table: "Threads",
+                columns: new[] { "Id", "Content", "IsOpen", "ThreadClosedDate", "ThreadOpenedDate", "Title", "TopicId", "UserProfileId" },
+                values: new object[,]
+                {
+                    { 1, "Some content", true, null, new DateTime(2021, 5, 12, 19, 32, 1, 218, DateTimeKind.Local).AddTicks(5551), "Test thread 1", 101, 1 },
+                    { 2, "Some content two", true, null, new DateTime(2021, 5, 12, 19, 32, 1, 218, DateTimeKind.Local).AddTicks(7727), "Test thread two", 101, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "Id", "Content", "PostDate", "RepliedPostId", "ThreadId", "UserProfileId" },
+                values: new object[,]
+                {
+                    { 1, "First reply to thread", new DateTime(2021, 5, 12, 19, 32, 1, 218, DateTimeKind.Local).AddTicks(9351), null, 1, 1 },
+                    { 3, "Reply to second thread", new DateTime(2021, 5, 12, 19, 32, 1, 219, DateTimeKind.Local).AddTicks(3190), null, 2, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "Id", "Content", "PostDate", "RepliedPostId", "ThreadId", "UserProfileId" },
+                values: new object[] { 2, "Reply to first reply to thread", new DateTime(2021, 5, 12, 19, 32, 1, 219, DateTimeKind.Local).AddTicks(2359), 1, 1, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

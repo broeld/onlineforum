@@ -6,7 +6,6 @@ namespace DAL.Domain
 {
     public class UserProfile : BaseEntity
     {
-        public string ProfileImagePath { get; set; }
         public int Rating { get; set; }
         public bool IsActive { get; set; }
         public DateTime RegistrationDate { get; set; }

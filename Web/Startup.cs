@@ -10,11 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using DAL.Infrastructure;
+using AutoMapper;
 using DAL.Infrastructure.Services;
 using BLL.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Web.Automapper;
 
 namespace Web
 {
@@ -35,8 +37,6 @@ namespace Web
 
             services.RegisterBusinessServices();
 
-            services.AddControllers();
-
             services.AddAuthentication(auth =>
             {
               auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -56,6 +56,14 @@ namespace Web
                         ClockSkew = TimeSpan.FromMinutes(int.Parse(Configuration["Tokens:ExpiryMinutes"]))
                     };
                 });
+
+
+            var mapperConfig = new MapperConfiguration(c => c.AddProfile(new AutomapperProfile()));
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddControllers().AddNewtonsoftJson(
+                opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddMvc();
 

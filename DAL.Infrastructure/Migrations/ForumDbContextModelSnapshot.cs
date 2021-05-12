@@ -81,6 +81,24 @@ namespace DAL.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "003b0471-a211-4992-9a7d-5c6dee90e55f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "73b96e95-53ac-46ae-b089-a3f574b94a06",
+                            Email = "dinaiovcheva@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DINAIOVCHEVA@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIiOToBtn/W1T7lqAYtuNNqiQYO6py3KFD9AZOXSln8EttkK4DlOR+Z+5tH5/wW7UA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "4c729f12-6ae3-4350-9124-24b42fbeb501",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Domain.Notification", b =>
@@ -139,6 +157,33 @@ namespace DAL.Infrastructure.Migrations
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "First reply to thread",
+                            PostDate = new DateTime(2021, 5, 12, 19, 32, 1, 218, DateTimeKind.Local).AddTicks(9351),
+                            ThreadId = 1,
+                            UserProfileId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Reply to first reply to thread",
+                            PostDate = new DateTime(2021, 5, 12, 19, 32, 1, 219, DateTimeKind.Local).AddTicks(2359),
+                            RepliedPostId = 1,
+                            ThreadId = 1,
+                            UserProfileId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Content = "Reply to second thread",
+                            PostDate = new DateTime(2021, 5, 12, 19, 32, 1, 219, DateTimeKind.Local).AddTicks(3190),
+                            ThreadId = 2,
+                            UserProfileId = 1
+                        });
                 });
 
             modelBuilder.Entity("DAL.Domain.Thread", b =>
@@ -176,6 +221,28 @@ namespace DAL.Infrastructure.Migrations
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("Threads");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "Some content",
+                            IsOpen = true,
+                            ThreadOpenedDate = new DateTime(2021, 5, 12, 19, 32, 1, 218, DateTimeKind.Local).AddTicks(5551),
+                            Title = "Test thread 1",
+                            TopicId = 101,
+                            UserProfileId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Some content two",
+                            IsOpen = true,
+                            ThreadOpenedDate = new DateTime(2021, 5, 12, 19, 32, 1, 218, DateTimeKind.Local).AddTicks(7727),
+                            Title = "Test thread two",
+                            TopicId = 101,
+                            UserProfileId = 1
+                        });
                 });
 
             modelBuilder.Entity("DAL.Domain.Topic", b =>
@@ -188,15 +255,20 @@ namespace DAL.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("text");
-
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Topics");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 101,
+                            Description = "Python is the best programming language ever",
+                            Title = "Python"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Domain.UserProfile", b =>
@@ -212,9 +284,6 @@ namespace DAL.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("ProfileImagePath")
-                        .HasColumnType("text");
-
                     b.Property<int>("Rating")
                         .HasColumnType("integer");
 
@@ -226,6 +295,16 @@ namespace DAL.Infrastructure.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("UserProfiles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ApplicationUserId = "003b0471-a211-4992-9a7d-5c6dee90e55f",
+                            IsActive = true,
+                            Rating = 1000,
+                            RegistrationDate = new DateTime(2021, 5, 12, 19, 32, 1, 211, DateTimeKind.Local).AddTicks(6155)
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -252,6 +331,15 @@ namespace DAL.Infrastructure.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8a85efda-db00-4823-b6b6-40893078d69f",
+                            ConcurrencyStamp = "f81dcd38-fce2-44ca-9b0d-7cc02667b9d2",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -337,6 +425,13 @@ namespace DAL.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "003b0471-a211-4992-9a7d-5c6dee90e55f",
+                            RoleId = "8a85efda-db00-4823-b6b6-40893078d69f"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

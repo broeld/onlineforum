@@ -21,7 +21,6 @@ namespace BLL.Infrastructure
         private IMapper mapper;
         private UserManager<ApplicationUser> userManager;
         private SignInManager<ApplicationUser> signInManager;
-        private string defaultProfileImagePath;
 
         public UserService(IUnitOfWork unitOfWork, IMapper automapper,
             UserManager<ApplicationUser> usermanager, SignInManager<ApplicationUser> signinManager)
@@ -30,7 +29,6 @@ namespace BLL.Infrastructure
             mapper = automapper;
             userManager = usermanager;
             signInManager = signinManager;
-            defaultProfileImagePath = "";
         }
 
         public async Task<bool> Deactivate(int userId)
@@ -110,8 +108,7 @@ namespace BLL.Infrastructure
             {
                 ApplicationUserId = appUser.Id,
                 IsActive = true,
-                RegistrationDate = DateTime.Now,
-                ProfileImagePath = registrationModel.ImageProfilePath ?? defaultProfileImagePath
+                RegistrationDate = DateTime.Now
             };
 
             await unit.UserProfiles.CreateAsync(userProfile);
@@ -126,11 +123,6 @@ namespace BLL.Infrastructure
 
             return new SignedInUserModel(userModel, token);
 
-        }
-
-        public Task UpdateImage(int userId, string profileImageName, string path, byte[] image)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<bool> IsInRoleAsync(int id, string role)

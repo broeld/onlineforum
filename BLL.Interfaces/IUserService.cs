@@ -11,7 +11,6 @@ namespace BLL.Interfaces
         Task<SignedInUserModel> SignUpAsync(RegistrationModel registrationModel, string tokenKey, int tokenExpTime, string tokenAud, string tokenIssuer);
         Task<UserModel> GetUserDetail(int userId);
         Task<bool> Deactivate(int userId);
-        Task UpdateImage(int userId, string profileImageName, string path, byte[] image);
         Task<bool> IsInRoleAsync(int id, string role);
         Task<ICollection<string>> GetRolesAsync(int userId);
     }

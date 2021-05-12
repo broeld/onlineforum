@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -15,54 +17,64 @@ namespace Web.Controllers
     public class ThreadsController : ControllerBase
     {
         private readonly IThreadService threadService;
+        private readonly IMapper _mapper;
 
-        public ThreadsController(IThreadService service)
+        public ThreadsController(IThreadService service, IMapper mapper)
         {
             threadService = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ThreadModel>>> Get()
+        public async Task<ActionResult<IEnumerable<ThreadDisplayViewModel>>> Get()
         {
             var threads = await threadService.GetAllAsync();
 
-            return Ok(threads);
+            var threadViewModels = _mapper.Map<IEnumerable<ThreadModel>, List<ThreadDisplayViewModel>>(threads);
+
+            return Ok(threadViewModels);
         }
 
         // GET: api/Threads/5
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ThreadModel>> Get(int id)
+        public async Task<ActionResult<ThreadDisplayViewModel>> Get(int id)
         {
             var thread = await threadService.GetByIdAsync(id);
 
             if (thread == null)
                 return BadRequest();
 
-            return Ok(thread);
+            var threadViewModel = _mapper.Map<ThreadModel, ThreadDisplayViewModel>(thread);
+
+            return Ok(threadViewModel);
         }
 
         //GET api/topics/4/threads
         [HttpGet]
         [Route("~/api/topics/{topicId:int}/threads")]
-        public async Task<ActionResult<IEnumerable<ThreadModel>>> GetThreadsByTopicId(int topicId)
+        public async Task<ActionResult<IEnumerable<ThreadDisplayViewModel>>> GetThreadsByTopicId(int topicId)
         {
             var threads = await threadService.GetThreadsByTopicId(topicId);
 
             if (threads == null)
                 return BadRequest();
 
-            return Ok(threads);
+            var threadViewModels = _mapper.Map<IEnumerable<ThreadModel>, List<ThreadDisplayViewModel>>(threads);
+
+            return Ok(threadViewModels);
         }
 
         // POST: api/Threads
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> Post([FromBody] ThreadModel thread)
+        public async Task<ActionResult> Post([FromBody] ThreadCreateModel thread)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await threadService.CreateAsync(thread);
+            var threadModel = _mapper.Map<ThreadCreateModel, ThreadModel>(thread);
+
+            await threadService.CreateAsync(threadModel);
 
             return Ok();
         }

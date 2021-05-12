@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -15,56 +17,62 @@ namespace Web.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IPostService postService;
-        private readonly IUserService userService;
+        private readonly IMapper _mapper;
 
-        public PostsController(IPostService pService, IUserService uService)
+        public PostsController(IPostService pService, IMapper mapper)
         {
             postService = pService;
-            userService = uService;
+            _mapper = mapper;
         }
 
         // GET: api/Posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PostModel>>> Get()
+        public async Task<ActionResult<IEnumerable<PostDetailModel>>> Get()
         {
             var posts = await postService.GetAllAsync();
+            var postViewModels = _mapper.Map<IEnumerable<PostModel>, List<PostDetailModel>>(posts);
 
-            return Ok(posts);
+            return Ok(postViewModels);
         }
 
         // GET: api/Posts/5
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<PostModel>> Get(int id)
+        public async Task<ActionResult<PostDetailModel>> Get(int id)
         {
             var post = await postService.GetByIdAsync(id);
 
             if (post == null)
                 return BadRequest();
 
-            return Ok(post);
+            var postViewModel = _mapper.Map<PostModel, PostDetailModel>(post);
+
+            return Ok(postViewModel);
         }
 
 
         //GET: api/threads/4/posts
         [HttpGet]
         [Route("~/api/threads/{threadId}/posts")]
-        public async Task<ActionResult<IEnumerable<PostModel>>> GetPostsByThreadId(int threadId)
+        public async Task<ActionResult<IEnumerable<PostDetailModel>>> GetPostsByThreadId(int threadId)
         {
             var posts = await postService.GetPostsByThreadId(threadId);
 
             if (posts == null)
                 return BadRequest();
 
-            return Ok(posts);
+            var postViewModels = _mapper.Map<IEnumerable<PostModel>, List<PostDetailModel>>(posts);
+
+            return Ok(postViewModels);
         }
 
 
         // POST: api/Posts
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Post([FromBody] PostModel post)
+        public async Task<IActionResult> Post([FromBody] PostCreateModel post)
         {
-            await postService.CreateAsync(post);
+            var postModel = _mapper.Map<PostCreateModel, PostModel>(post);
+            await postService.CreateAsync(postModel);
 
             return Ok();
         }

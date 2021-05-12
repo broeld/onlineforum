@@ -65,7 +65,7 @@ namespace Web.Controllers
         [HttpGet("isadmin")]
         public async Task<ActionResult<bool>> IsAdmin(int userId)
         {
-            var isAdmin = await userService.IsInRoleAsync(userId, "admin");
+            var isAdmin = await userService.IsInRoleAsync(userId, "Admin");
 
             return Ok(isAdmin);
         }

@@ -15,7 +15,5 @@ namespace BLL.Interfaces
         Task UpdateAsync(TopicModel topicDto);
 
         Task RemoveAsync(TopicModel topicsDto);
-
-        Task CreateTopicWithImage(TopicModel topicDto, string fileName, string rootPath, byte[] image);
     }
 }

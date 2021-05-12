@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -14,25 +16,35 @@ namespace Web.Controllers
     public class NotificationController : ControllerBase
     {
         private readonly INotificationService notificationService;
+        private readonly IMapper _mapper;
 
-        public NotificationController(INotificationService service)
-        {
+        public NotificationController(INotificationService service, IMapper mapper)
+        {         
             notificationService = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NotificationModel>>> GetAll()
         {
-            return Ok(await notificationService.GetAllAsync());
+            var notifications = await notificationService.GetAllAsync();
+
+            var notificationViewModels = _mapper.Map<IEnumerable<NotificationModel>,
+                List<NotificationViewModel>>(notifications);
+
+            return Ok(notificationViewModels);
+
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] NotificationModel notificationModel)
+        public async Task<ActionResult> Post([FromBody] NotificationViewModel notificationModel)
         {
             if (notificationModel == null)
                 return BadRequest();
 
-            await notificationService.CreateAsync(notificationModel);
+            var notification = _mapper.Map<NotificationViewModel, NotificationModel>(notificationModel);
+
+            await notificationService.CreateAsync(notification);
 
             return Ok();
         }

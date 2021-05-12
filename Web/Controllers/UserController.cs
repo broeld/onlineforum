@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -14,18 +12,17 @@ namespace Web.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService userService;
+        private readonly IUserService userService;
+        private readonly IMapper _mapper;
 
-        // private IHostingEnvironment hostingEnv;
-
-        public UserController(IUserService service)
+        public UserController(IUserService service, IMapper mapper)
         {
-            //hostingEnv = hostingEnvironment;
             userService = service;
+            _mapper = mapper;
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<UserModel>> Get(int id)
+        public async Task<ActionResult<UserViewModel>> Get(int id)
         {
             var user = await userService.GetUserDetail(id);
 
@@ -34,8 +31,11 @@ namespace Web.Controllers
                 return BadRequest();
             }
 
-            return Ok(user);
+            var userViewModel = _mapper.Map<UserModel, UserViewModel>(user);
+
+            return Ok(userViewModel);
         }
+
 
         [Authorize(Roles = "Admin")]
         [HttpPut("deactivate/{userId}")]
@@ -46,15 +46,6 @@ namespace Web.Controllers
             if (!isSuccessful)
                 return BadRequest();
 
-            return Ok();
-        }
-
-        [Authorize]
-        [HttpPut]
-        [Route("upload-image/{userId}")]
-        //public async Task<IActionResult> UploadImage([FromRoute] int userId, [FromForm] ImageForm userImageForm)
-        public async Task<IActionResult> UploadImage([FromRoute] int userId)
-        {
             return Ok();
         }
     }

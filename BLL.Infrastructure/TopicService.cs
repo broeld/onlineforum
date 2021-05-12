@@ -13,30 +13,18 @@ namespace BLL.Infrastructure
     {
         private IUnitOfWork unit;
         private IMapper mapper;
-        private readonly string defaultTopicImagePath;
 
         public TopicService(IUnitOfWork unitOfWork, IMapper automapper)
         {
             unit = unitOfWork;
             mapper = automapper;
-            defaultTopicImagePath = "";
         }
         public async Task CreateAsync(TopicModel topic)
         {
-            if (topic.ImagePath == null)
-            {
-                topic.ImagePath = defaultTopicImagePath;
-            }
-
             var topicEntity = mapper.Map<TopicModel, Topic>(topic);
 
             await unit.Topics.CreateAsync(topicEntity);
             await unit.SaveChangesAsync();
-        }
-
-        public Task CreateTopicWithImage(TopicModel topic, string fileName, string rootPath, byte[] image)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<TopicModel>> GetAllAsync()
