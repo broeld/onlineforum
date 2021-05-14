@@ -25,7 +25,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NotificationModel>>> GetAll()
+        public async Task<ActionResult<IEnumerable<NotificationViewModel>>> GetAll()
         {
             var notifications = await notificationService.GetAllAsync();
 

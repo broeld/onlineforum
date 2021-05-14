@@ -21,24 +21,25 @@ namespace Web.Automapper
                 .ForMember(d => d.Threads, opt => opt.Ignore())
                 .ForMember(d => d.Notifications, opt => opt.Ignore());
 
-            CreateMap<PostModel, Post>()
+            CreateMap<Post, PostModel>()
                 .ReverseMap()
                 .ForMember(d => d.UserProfile, opt => opt.Ignore())
                 .ForMember(d => d.Thread, opt => opt.Ignore())
                 .ForMember(d => d.RepliedPost, opt => opt.Ignore());
 
-            CreateMap<ThreadModel, Thread>().ReverseMap();
-            CreateMap<TopicModel, Topic>().ReverseMap();
+            CreateMap<Thread, ThreadModel>().ReverseMap();
+            CreateMap<Topic, TopicModel>().ReverseMap();
             CreateMap<Notification, NotificationModel>().ReverseMap();
 
+            //BLL and Web
+            CreateMap<UserModel, AuthorModel>();
+            CreateMap<UserModel, UserViewModel>();
 
             CreateMap<NotificationModel, NotificationViewModel>()
                 .ForMember(nvm => nvm.ThreadTitle, opt => opt.MapFrom(nm => nm.Post.Thread.Title))
                 .ReverseMap()
                 .ForMember(nm => nm.NotificationDate, opt => opt.MapFrom(nvm => DateTime.Now));
 
-
-            //BLL and Web
             CreateMap<PostModel, PostDetailModel>();
             CreateMap<PostModel, PostReplyModel>();
             CreateMap<PostCreateModel, PostModel>()
@@ -56,9 +57,6 @@ namespace Web.Automapper
                 .ReverseMap();
 
             CreateMap<TopicCreateModel, TopicModel>();
-
-            CreateMap<UserModel, AuthorModel>();
-            CreateMap<UserModel, UserViewModel>();
         }
     }
 }

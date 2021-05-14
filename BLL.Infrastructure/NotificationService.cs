@@ -35,7 +35,7 @@ namespace BLL.Infrastructure
             await unit.SaveChangesAsync();
         }
 
-        public async  Task<IEnumerable<NotificationModel>> GetAllAsync()
+        public async Task<IEnumerable<NotificationModel>> GetAllAsync()
         {
             var notifications = await unit.Notifications.GetAllAsync();
 

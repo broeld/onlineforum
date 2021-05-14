@@ -149,6 +149,8 @@ namespace BLL.Infrastructure
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Aud, tokenAudience),
+                new Claim(JwtRegisteredClaimNames.Iss, tokenIssuer),
                 new Claim(JwtRegisteredClaimNames.Iat, utcNow.ToString())
             };
 
