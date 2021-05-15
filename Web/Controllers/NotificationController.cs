@@ -37,12 +37,12 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] NotificationViewModel notificationModel)
+        public async Task<ActionResult> Post([FromBody] NotificationCreateModel notificationModel)
         {
             if (notificationModel == null)
                 return BadRequest();
 
-            var notification = _mapper.Map<NotificationViewModel, NotificationModel>(notificationModel);
+            var notification = _mapper.Map<NotificationCreateModel, NotificationModel>(notificationModel);
 
             await notificationService.CreateAsync(notification);
 

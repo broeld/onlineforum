@@ -17,6 +17,7 @@ namespace DAL.Infrastructure
         public Repository(DbContext context)
         {
             dbset = context.Set<T>();
+            dbset.AsNoTracking();
         }
 
         public abstract IQueryable<T> DbsetWithProperties();

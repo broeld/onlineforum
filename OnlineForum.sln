@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Models", "BLL.Models\BLL.Models.csproj", "{BBC3CA54-2504-4B82-B2E2-0E11ECA30F5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineForum.UnitTests", "OnlineForum.UnitTests\OnlineForum.UnitTests.csproj", "{FA07BF09-F00E-4234-BDAA-AA5E9C1EECE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineForum.UnitTests", "OnlineForum.UnitTests\OnlineForum.UnitTests.csproj", "{FA07BF09-F00E-4234-BDAA-AA5E9C1EECE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineForum.IntegrationTests", "OnlineForum.IntegrationTests\OnlineForum.IntegrationTests.csproj", "{06194FC2-8304-43B6-9541-8AAC3ABCB659}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{FA07BF09-F00E-4234-BDAA-AA5E9C1EECE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA07BF09-F00E-4234-BDAA-AA5E9C1EECE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA07BF09-F00E-4234-BDAA-AA5E9C1EECE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06194FC2-8304-43B6-9541-8AAC3ABCB659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06194FC2-8304-43B6-9541-8AAC3ABCB659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06194FC2-8304-43B6-9541-8AAC3ABCB659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06194FC2-8304-43B6-9541-8AAC3ABCB659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

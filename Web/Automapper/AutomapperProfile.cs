@@ -36,9 +36,12 @@ namespace Web.Automapper
             CreateMap<UserModel, UserViewModel>();
 
             CreateMap<NotificationModel, NotificationViewModel>()
-                .ForMember(nvm => nvm.ThreadTitle, opt => opt.MapFrom(nm => nm.Post.Thread.Title))
+                .ForMember(nvm => nvm.ThreadId, opt => opt.MapFrom(nm => nm.Post.ThreadId))
                 .ReverseMap()
                 .ForMember(nm => nm.NotificationDate, opt => opt.MapFrom(nvm => DateTime.Now));
+
+            CreateMap<NotificationCreateModel, NotificationModel>()
+                .ForMember(dest => dest.NotificationDate, opt => opt.MapFrom(cd => DateTime.Now));
 
             CreateMap<PostModel, PostDetailModel>();
             CreateMap<PostModel, PostReplyModel>();

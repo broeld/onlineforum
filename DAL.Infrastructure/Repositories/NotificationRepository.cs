@@ -14,7 +14,7 @@ namespace DAL.Infrastructure.Repositories
         public override IQueryable<Notification> DbsetWithProperties()
         {
             return dbset.Include(p => p.Post).ThenInclude(p => p.Thread)
-                .Include(p => p.UserProfile).ThenInclude(up => up.ApplicationUser);
+                .Include(p => p.UserProfile).ThenInclude(up => up.ApplicationUser).AsNoTracking();
         }
     }
 }
