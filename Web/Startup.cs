@@ -56,15 +56,15 @@ namespace Web
             })
                 .AddJwtBearer(jwtBearerOptions => 
                 {
-                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters ()
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
                         ValidateIssuer = true,
                         ValidIssuer = Configuration["Tokens:Issuer"],
                         ValidateAudience = true,
-                        ValidAudience = Configuration["Token:Audience"],
-                        ValidateLifetime = bool.Parse(Configuration["Tokens:ValidateLifeTime"]),
+                        ValidAudience = Configuration["Tokens:Audience"],
+                        ValidateLifetime = bool.Parse(Configuration["Tokens:ValidateLifetime"]),
                         ClockSkew = TimeSpan.FromMinutes(int.Parse(Configuration["Tokens:ExpiryMinutes"]))
                     };
                 });
