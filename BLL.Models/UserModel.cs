@@ -12,6 +12,7 @@ namespace BLL.Models
         public DateTime RegistrationDate { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
+        public bool IsAdmin { get; set; } = false;
 
         public ICollection<PostModel> Posts { get; set; }
         public ICollection<ThreadModel> Threads { get; set; }

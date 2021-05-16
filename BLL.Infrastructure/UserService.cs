@@ -51,7 +51,10 @@ namespace BLL.Infrastructure
                 throw new Exception("Result is null");
             }
 
-            return mapper.Map<UserProfile, UserModel>(userProfile);
+            var userModel = mapper.Map<UserProfile, UserModel>(userProfile);
+            userModel.IsAdmin = await IsInRoleAsync(userId, "Admin");
+
+            return userModel;
         }
 
         public async Task<SignedInUserModel> SignInAsync(LoginModel loginModel, string tokenKey, int tokenExpTime, string tokenAud, string tokenIssuer)
