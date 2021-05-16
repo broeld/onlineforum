@@ -35,7 +35,6 @@ namespace OnlineForum.IntegrationTests.EndpointTests
             Assert.AreEqual(2, notifications.Count());
         }
 
-        [Test]
         public async Task NotificationController_DeleteById_DeleteEntity()
         {
             var httpResponse = await _client.DeleteAsync(RequestUri + 52);

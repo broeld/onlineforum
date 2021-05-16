@@ -82,6 +82,7 @@ namespace BLL.Infrastructure
             }
 
             var userModel = mapper.Map<UserProfile, UserModel>(userProfile);
+            userModel.IsAdmin = await IsInRoleAsync(userModel.Id, "Admin");
 
             return new SignedInUserModel(userModel, token);
         }

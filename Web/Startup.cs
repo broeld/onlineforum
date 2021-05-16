@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Web.Automapper;
+using Web.Middlewares;
 
 namespace Web
 {
@@ -104,6 +105,8 @@ namespace Web
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.ConfigureExceptionHandler();
 
             app.UseEndpoints(endpoints =>
             {
