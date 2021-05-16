@@ -17,7 +17,7 @@ namespace DAL.Infrastructure.Repositories
                 .Include(p => p.Replies)
                 .Include(p => p.Thread)
                 .Include(p => p.Notifications)
-                .Include(p => p.UserProfile).ThenInclude(up => up.ApplicationUser);
+                .Include(p => p.UserProfile).ThenInclude(up => up.ApplicationUser).AsNoTracking();
         }
     }
 }

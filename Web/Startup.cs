@@ -70,7 +70,6 @@ namespace Web
                     };
                 });
 
-
             var mapperConfig = new MapperConfiguration(c => c.AddProfile(new AutomapperProfile()));
             var mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -90,7 +89,7 @@ namespace Web
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseSwagger();
 
@@ -106,7 +105,7 @@ namespace Web
 
             app.UseAuthorization();
 
-            app.ConfigureExceptionHandler();
+            // app.ConfigureExceptionHandler();
 
             app.UseEndpoints(endpoints =>
             {

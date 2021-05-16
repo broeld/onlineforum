@@ -19,7 +19,7 @@ namespace DAL.Infrastructure.Repositories
                 .Include(t => t.Posts)
                 .Include(t => t.Topic)
                 .Include(t => t.UserProfile)
-                .ThenInclude(up => up.ApplicationUser);
+                .ThenInclude(up => up.ApplicationUser).AsNoTracking();
         }
     }
 }

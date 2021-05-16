@@ -77,7 +77,7 @@ namespace DAL.Infrastructure
                 }
             }
 
-            return query;
+            return query.AsNoTracking();
         }
 
     }

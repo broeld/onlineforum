@@ -18,7 +18,7 @@ namespace DAL.Infrastructure.Repositories
             return dbset
                 .Include(p => p.Threads)
                 .ThenInclude(t => t.UserProfile)
-                .ThenInclude(up => up.ApplicationUser);
+                .ThenInclude(up => up.ApplicationUser).AsNoTracking();
         }
     }
 }

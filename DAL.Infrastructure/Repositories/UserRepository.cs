@@ -19,7 +19,7 @@ namespace DAL.Infrastructure.Repositories
                 .Include(up => up.Threads)
                 .Include(up => up.Posts)
                 .Include(up => up.Notifications)
-                .Include(up => up.ApplicationUser);
+                .Include(up => up.ApplicationUser).AsNoTracking();
         }
     }
 }
